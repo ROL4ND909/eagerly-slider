@@ -1,0 +1,12 @@
+{
+  "name": "@wcd/ROL4ND909.litts-kvur2u0a",
+  "version": "0.0.0",
+  "description": "",
+  "license": "ISC",
+  "type": "module",
+  "homepage": "{{ homepage }}",
+  "scripts": {
+    "serve": "npx wcd-cli@latest serve fJN5zdyIODH6cFsrQorV --open"
+  },
+  "dependencies": {}
+}
