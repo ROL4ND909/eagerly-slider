@@ -62,7 +62,7 @@ export class EagerlySlider extends LitElement {
 
       if (forward) {
         this.activeSlide.classList.add('slide-out-left')
-
+        
         this.index = ((this.index + 1) % this.children.length)
 
         const nextActiveSlide = this.children[this.index]
@@ -70,7 +70,7 @@ export class EagerlySlider extends LitElement {
       } else {
         // If backbutton is used
         this.activeSlide.classList.add('slide-out-right')
-
+        
         this.index = ((this.index - 1 + this.children.length) % this.children.length)
 
         const prevActiveSlide = this.children[this.index]
