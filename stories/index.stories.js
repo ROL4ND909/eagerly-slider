@@ -6,8 +6,23 @@ export default {
   // },
 };
 
-export const story1 = () => `
-    <eagerly-slider>
+export const SliderExample1 = () => `
+    <eagerly-slider title="title">
+      <img src="https://i.imgur.com/88RbRIc.jpg" />
+      <img src="https://i.imgur.com/1wTXrAu.jpg" />
+      <img src="https://i.imgur.com/ktDKGxb.jpg">
+    </eagerly-slider>
+`;
+
+export const SliderExample2 = () => `
+    <style>
+      :root {
+        --eagerly-slider-ratio: 1;
+        --eagerly-slider-clr-secundary: tomato;
+        --eagerly-slider-radius: 0;
+      }
+    </style>
+    <eagerly-slider hideHeader>
       <eagerly-slider-slide>
         <img slot="media" src="https://i.imgur.com/88RbRIc.jpg" />
         <h1 slot="content" style="font-family: serif">A SLIDE COMPONENT</h1>
@@ -42,6 +57,25 @@ export const story1 = () => `
       
       <div style="background-color: aquamarine;">
 				<h1>Hi</h1>
+				<p>I'm just a &lt;div&gt; element with content</p>
+			</div>
+    </eagerly-slider>
+`;
+
+export const SliderExample3 = () => `
+    <eagerly-slider hideHeader showProgress>
+      <div style="background-color: aquamarine;">
+				<h1>Hi</h1>
+				<p>I'm just a &lt;div&gt; element with content</p>
+			</div>
+            
+      <div style="background-color: tomato; color: hsl(50 30% 80%);">
+				<h1>Hi from slide 2</h1>
+				<p>I'm just a &lt;div&gt; element with content</p>
+			</div>
+
+      <div style="background-color: purple;">
+				<h1>Hi from slide 3</h1>
 				<p>I'm just a &lt;div&gt; element with content</p>
 			</div>
     </eagerly-slider>

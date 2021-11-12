@@ -4,6 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <script src="./dist/index.js" type="module"></script>
+  <style>
+    body {
+      max-width: 60rem;
+      padding: 2rem;
+      margin: auto;
+    }
+
+    body>*:where(:not(:first-child)) {
+      margin-top: 3rem;
+    }
+
+    .slider-2 {
+      --eagerly-slider-ratio: 1;
+      --eagerly-slider-clr-secundary: tomato;
+      --eagerly-slider-radius: 0;
+    }
+  </style>
 </head>
 
 <body>
@@ -44,6 +61,29 @@
 
     <div style="background-color: aquamarine;">
       <h1>Hi</h1>
+      <p>I'm just a &lt;div&gt; element with content</p>
+    </div>
+  </eagerly-slider>
+
+  <eagerly-slider title="Title" showProgress class="slider-2">
+    <img src="https://i.imgur.com/88RbRIc.jpg" />
+    <img src="https://i.imgur.com/1wTXrAu.jpg" />
+    <img src="https://i.imgur.com/ktDKGxb.jpg">
+  </eagerly-slider>
+
+  <eagerly-slider hideHeader>
+    <div style="background-color: aquamarine;">
+      <h1>Hi</h1>
+      <p>I'm just a &lt;div&gt; element with content</p>
+    </div>
+
+    <div style="background-color: tomato; color: hsl(50 30% 80%);">
+      <h1>Hi from slide 2</h1>
+      <p>I'm just a &lt;div&gt; element with content</p>
+    </div>
+
+    <div style="background-color: purple;">
+      <h1>Hi from slide 3</h1>
       <p>I'm just a &lt;div&gt; element with content</p>
     </div>
   </eagerly-slider>
