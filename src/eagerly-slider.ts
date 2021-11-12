@@ -6,7 +6,7 @@ import './eagerly-slider.css'
 
 @customElement('eagerly-slider')
 export class EagerlySlider extends LitElement {
-  @property({type: Number}) _index = 0;
+  @property({type: Number}) index = 0;
   @property({type: Boolean}) clickable = true
   @property({type: String}) title = 'Slides'
   @property({type: Boolean}) hideHeader = false
@@ -17,26 +17,11 @@ export class EagerlySlider extends LitElement {
 		return this.children.length > 0
 	}
 
-  get index() {
-    return this._index
-  }
-
-  set index(value: number) {
-    this._index = value
-
-		if (this.hasSlides) {
-			this.children[this._index].dispatchEvent(new CustomEvent('exited'))
-			this.children[value].dispatchEvent(new CustomEvent('entered'))
-		}
-  }
-
   constructor() {
     super()
 
     // set first slide as active slide
-		if (this.hasSlides) {
-    	this.children[this.index].classList.add('is-active')
-		}
+    this.children[this.index]?.classList.add('is-active')
 
     Array.from(this.children).forEach((slide) => {
       slide.addEventListener('transitionend', () => {
@@ -53,15 +38,21 @@ export class EagerlySlider extends LitElement {
   }
 
   firstUpdated() {
-		if (this.hasSlides) {
-    	this.children[this._index].dispatchEvent(new CustomEvent('entered'))
-		}
+    this.children[this.index]?.dispatchEvent(new CustomEvent('entered'))
 
     if (this.children.length > 1) {
       Array.from(this.renderRoot.querySelectorAll('.btn')).forEach((el) => {
         el.classList.add('show-btn')
       })
 		}
+  }
+
+  updated(changedProps: Map<string | number | symbol, any>) {
+    super.updated(changedProps);
+    if (changedProps.has('index') && this.hasSlides) {
+      this.children[changedProps.get('index')]?.dispatchEvent(new CustomEvent('exited'))
+      this.children[this.index].dispatchEvent(new CustomEvent('entered'))
+    }
   }
 
   changeSlide(forward: Boolean): void {
@@ -71,16 +62,16 @@ export class EagerlySlider extends LitElement {
 
       if (forward) {
         this.activeSlide.classList.add('slide-out-left')
-
-        this.index = ((this._index + 1) % this.children.length)
+        
+        this.index = ((this.index + 1) % this.children.length)
 
         const nextActiveSlide = this.children[this.index]
         nextActiveSlide.classList.add('slide-in-right', 'is-active')
       } else {
         // If backbutton is used
         this.activeSlide.classList.add('slide-out-right')
-
-        this.index = ((this._index - 1 + this.children.length) % this.children.length)
+        
+        this.index = ((this.index - 1 + this.children.length) % this.children.length)
 
         const prevActiveSlide = this.children[this.index]
         prevActiveSlide.classList.add('slide-in-left', 'is-active')
