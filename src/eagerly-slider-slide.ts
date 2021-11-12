@@ -64,7 +64,7 @@ export class EagerlySliderSlide extends LitElement {
 		return html`
 			<slot name="media"></slot>
       <div class="slide-content">
-        <slot></slot>
+        <slot name="content"></slot>
       </div>
 		`
 	}

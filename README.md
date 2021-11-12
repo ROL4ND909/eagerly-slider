@@ -33,12 +33,12 @@
 <eagerly-slider showProgress>
       <eagerly-slider-slide>
         <img slot="media" src="https://i.imgur.com/88RbRIc.jpg" />
-        <h1 style="font-family: serif">A SLIDE COMPONENT</h1>
+        <h1 slot="content" style="font-family: serif">A SLIDE COMPONENT</h1>
       </eagerly-slider-slide>
 
       <eagerly-slider-slide>
         <video slot="media" src="https://i.imgur.com/KfpqUdC.mp4" loop playsinline></video>
-        <div>
+        <div slot="content">
           <h2>This video will</h2>
           <h1 style="font-family: serif">AUTOPLAY</h1>
           <h3>when it's focused</h3>
@@ -47,7 +47,7 @@
 
       <eagerly-slider-slide>
         <img slot="media" src="https://i.imgur.com/1wTXrAu.jpg" />
-        <div>
+        <div slot="content">
           <h1>This text</h1>
           <p>uses <i>default</i> overlay styling.</p>
         </div>

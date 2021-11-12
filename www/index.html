@@ -9,15 +9,15 @@
 <body>
   <h1>Hello Eagerly-Slider!</h1>
 
-  <eagerly-slider name="Slides">
+  <eagerly-slider>
     <eagerly-slider-slide>
       <img slot="media" src="https://i.imgur.com/88RbRIc.jpg" />
-      <h1 style="font-family: serif">A SLIDE COMPONENT</h1>
+      <h1 slot="content" style="font-family: serif">A SLIDE COMPONENT</h1>
     </eagerly-slider-slide>
 
     <eagerly-slider-slide>
       <video slot="media" src="https://i.imgur.com/KfpqUdC.mp4" loop playsinline></video>
-      <div>
+      <div slot="content">
         <h2>This video will</h2>
         <h1 style="font-family: serif">AUTOPLAY</h1>
         <h3>when it's focused</h3>
@@ -26,7 +26,7 @@
 
     <eagerly-slider-slide>
       <img slot="media" src="https://i.imgur.com/1wTXrAu.jpg" />
-      <div>
+      <div slot="content">
         <h1>This text</h1>
         <p>uses <i>default</i> overlay styling.</p>
       </div>
@@ -34,7 +34,7 @@
 
     <eagerly-slider-slide>
       <video slot="media" src="https://i.imgur.com/PwTsAT3.mp4" loop playsinline></video>
-      <div>
+      <div slot="content">
         <p>The next card is just a plain</p>
         <h1>&lt;img&gt; tag</h1>
       </div>
@@ -43,13 +43,8 @@
     <img src="https://i.imgur.com/ktDKGxb.jpg">
 
     <div style="background-color: aquamarine;">
-      <h1>Hallo</h1>
-      <p>Ik ben gewoon een slide</p>
-    </div>
-
-    <div style="background-color:cadetblue">
-      <h1>Hallo 2</h1>
-      <p>Ik ben gewoon een slide</p>
+      <h1>Hi</h1>
+      <p>I'm just a &lt;div&gt; element with content</p>
     </div>
   </eagerly-slider>
 </body>
