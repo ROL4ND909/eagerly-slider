@@ -49,35 +49,15 @@ export class EagerlySliderSlide extends LitElement {
     .slide-content {
       position: absolute;
 			inset: 0;
-      padding: 48px;
+      padding: 3rem;
       font-family: sans-serif;
       color: white;
-      font-size: 24px;
+      font-size: 1.5rem;
     }
 
     .slide-content > slot::slotted(*) {
       margin: 0;
     }
-
-		@keyframes animateInLeft {
-			0% {
-				transform: translateX(-100%);
-			}
-
-			100% {
-				transform: translateX(0);
-			}
-		}
-
-		@keyframes animateInRight {
-			0% {
-				transform: translateX(100%);
-			}
-
-			100% {
-				transform: translateX(0);
-			}
-		}
   `;
 
 	render() {
