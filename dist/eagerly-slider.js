@@ -7,28 +7,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { packd_export_0 } from 'https://srv.divriots.com/packd/lit,lit-html@next-major,lit/decorators.js,lit/directives/class-map.js';const { LitElement,html,css,svg } = packd_export_0;;
 import { packd_export_2 } from 'https://srv.divriots.com/packd/lit,lit-html@next-major,lit/decorators.js,lit/directives/class-map.js';const { customElement,property } = packd_export_2;;
 import { packd_export_3 } from 'https://srv.divriots.com/packd/lit,lit-html@next-major,lit/decorators.js,lit/directives/class-map.js';const { classMap } = packd_export_3;;
+import './eagerly-slider.css.js';
 let EagerlySlider = class EagerlySlider extends LitElement {
     constructor() {
+        var _a;
         super();
-        this.name = '';
-        this._index = 0;
-        this.clickable = true;
         this.index = 0;
+        this.clickable = true;
+        this.title = 'Slides';
+        this.hideHeader = false;
+        this.showProgress = false;
         // set first slide as active slide
-        this.children[this.index].classList.add('is-active');
-    }
-    get index() {
-        return this._index;
-    }
-    set index(value) {
-        this.children[this._index].dispatchEvent(new CustomEvent('exited'));
-        this.children[value].dispatchEvent(new CustomEvent('entered'));
-        this._index = value;
-    }
-    firstUpdated() {
-        this.children[this._index].dispatchEvent(new CustomEvent('entered'));
-    }
-    update(changedProperties) {
+        (_a = this.children[this.index]) === null || _a === void 0 ? void 0 : _a.classList.add('is-active');
         Array.from(this.children).forEach((slide) => {
             slide.addEventListener('transitionend', () => {
                 // Check for the old active transition and if clickable is false
@@ -40,55 +30,79 @@ let EagerlySlider = class EagerlySlider extends LitElement {
                 }
             });
         });
-        super.update(changedProperties);
+    }
+    get hasSlides() {
+        return this.children.length > 0;
+    }
+    firstUpdated() {
+        var _a;
+        (_a = this.children[this.index]) === null || _a === void 0 ? void 0 : _a.dispatchEvent(new CustomEvent('entered'));
+        if (this.children.length > 1) {
+            Array.from(this.renderRoot.querySelectorAll('.btn')).forEach((el) => {
+                el.classList.add('show-btn');
+            });
+        }
+    }
+    updated(changedProps) {
+        var _a;
+        super.updated(changedProps);
+        if (changedProps.has('index') && this.hasSlides) {
+            (_a = this.children[changedProps.get('index')]) === null || _a === void 0 ? void 0 : _a.dispatchEvent(new CustomEvent('exited'));
+            this.children[this.index].dispatchEvent(new CustomEvent('entered'));
+        }
     }
     changeSlide(forward) {
         if (this.clickable) {
             this.clickable = false;
             this.activeSlide = this.querySelector('.is-active');
             if (forward) {
-                this.index = ((this._index + 1) % this.children.length);
+                this.activeSlide.classList.add('slide-out-left');
+                this.index = ((this.index + 1) % this.children.length);
                 const nextActiveSlide = this.children[this.index];
                 nextActiveSlide.classList.add('slide-in-right', 'is-active');
-                this.activeSlide.classList.add('slide-out-left');
             }
             else {
                 // If backbutton is used
-                this.index = ((this._index - 1 + this.children.length) % this.children.length);
+                this.activeSlide.classList.add('slide-out-right');
+                this.index = ((this.index - 1 + this.children.length) % this.children.length);
                 const prevActiveSlide = this.children[this.index];
                 prevActiveSlide.classList.add('slide-in-left', 'is-active');
-                this.activeSlide.classList.add('slide-out-right');
             }
         }
     }
     render() {
-        return html `
-      <div class="header">
-        <p><strong>${this.name}</strong></p>
+        return this.hasSlides
+            ? html `
+				${this.hideHeader ? '' : html `
+					<div class="header">
+						<p><strong>${this.title}</strong></p>
 
-        <p><strong>${this.index + 1} / ${this.children.length}</strong></p>
-      </div>
+						<p><strong>${this.index + 1} / ${this.children.length}</strong></p>
+					</div>
+				`}
 
-      <div class="viewport">
-        <slot></slot>
-      </div>
+				<div class="viewport">
+					<slot></slot>
+				</div>
 
-      <div class="actions">
-        <button class="btn" data-action="slideBack" @click=${() => this.changeSlide(false)} aria-label="Prev Slide">
-          ${svg `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.42 7.4l-4.6 4.6 4.6 4.6-1.4 1.4-6-6 6-6z"/></svg>`}
-        </button>
-        <button class="btn" data-action="slideNext" @click=${() => this.changeSlide(true)} aria-label="Next Slide">
-          ${svg `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M9.98 6l6 6-6 6-1.4-1.4 4.6-4.6-4.6-4.6z"/></svg>`}
-        </button>
-      </div>
+				<div class="actions">
+					<button class="btn" data-action="slideBack" @click=${() => this.changeSlide(false)} aria-label="Prev Slide">
+						${svg `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.42 7.4l-4.6 4.6 4.6 4.6-1.4 1.4-6-6 6-6z"/></svg>`}
+					</button>
+					<button class="btn" data-action="slideNext" @click=${() => this.changeSlide(true)} aria-label="Next Slide">
+						${svg `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M9.98 6l6 6-6 6-1.4-1.4 4.6-4.6-4.6-4.6z"/></svg>`}
+					</button>
+				</div>
 
-      <div class="progress">
-        ${Array.from(this.children).map((_, i) => html `
-          <div class=${classMap({ watched: i <= this.index })}></div>
-          <!-- @click=${(_) => (this.index = i)} -->
-        `)}
-      </div>
-    `;
+				${this.showProgress ? html `
+					<div class="progress">
+						${Array.from(this.children).map((_, i) => html `
+							<div class=${classMap({ watched: i <= this.index })}></div>
+							<!-- @click=${(_) => (this.index = i)} -->
+						`)}
+					</div>
+				` : ''}
+			` : html `<h1>No slides to show</h1>`;
     }
 };
 EagerlySlider.styles = css `
@@ -107,7 +121,7 @@ EagerlySlider.styles = css `
     .viewport {
       position: relative;
       overflow: hidden;
-      aspect-ratio: 5/3;
+      aspect-ratio: var(--eagerly-slider-ratio, 5/3);
     }
 
     .header {
@@ -127,6 +141,7 @@ EagerlySlider.styles = css `
     }
 
     .btn {
+      display: none;
       align-items: center;
       justify-content: center;
       width: 3rem;
@@ -134,10 +149,14 @@ EagerlySlider.styles = css `
       padding: 0.25rem;
       cursor: pointer;
       pointer-events: all;
-      color: var(--slider-primary-clr, #fff);
+      color: var(--eagerly-slider-clr-primary, #fff);
       border: none;
-      border-radius: var(--slider-radius, 50%);
-      background-color:  var(--slider-secundary-clr, #000);
+      border-radius: var(--eagerly-slider-radius, 50%);
+      background-color:  var(--eagerly-slider-clr-secundary, #000);
+    }
+
+    .show-btn {
+      display: flex;
     }
 
     .progress {
@@ -176,8 +195,8 @@ EagerlySlider.styles = css `
       inset: 0;
       z-index: -1;
       height: 100%;
-      transition: transform var(--slider-duration, 700ms) ease;
-      animation-duration: var(--slider-duration, 700ms);
+      transition: transform var(--eagerly-slider-duration, 700ms) ease;
+      animation-duration: var(--eagerly-slider-duration, 700ms);
       transform: translateX(0);
     }
 
@@ -204,14 +223,20 @@ EagerlySlider.styles = css `
     }
   `;
 __decorate([
-    property({ type: String })
-], EagerlySlider.prototype, "name", void 0);
-__decorate([
     property({ type: Number })
-], EagerlySlider.prototype, "_index", void 0);
+], EagerlySlider.prototype, "index", void 0);
 __decorate([
     property({ type: Boolean })
 ], EagerlySlider.prototype, "clickable", void 0);
+__decorate([
+    property({ type: String })
+], EagerlySlider.prototype, "title", void 0);
+__decorate([
+    property({ type: Boolean })
+], EagerlySlider.prototype, "hideHeader", void 0);
+__decorate([
+    property({ type: Boolean })
+], EagerlySlider.prototype, "showProgress", void 0);
 __decorate([
     property()
 ], EagerlySlider.prototype, "activeSlide", void 0);
