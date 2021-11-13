@@ -4,7 +4,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-import { packd_export_0 } from 'https://srv.divriots.com/packd/lit,lit-html@next-major,lit/decorators.js,lit/directives/class-map.js';const { LitElement,html,css,svg } = packd_export_0;;
+import { packd_export_0 } from 'https://srv.divriots.com/packd/lit,lit-html@next-major,lit/decorators.js,lit/directives/class-map.js';const { LitElement,html,css } = packd_export_0;;
 import { packd_export_2 } from 'https://srv.divriots.com/packd/lit,lit-html@next-major,lit/decorators.js,lit/directives/class-map.js';const { customElement,property } = packd_export_2;;
 import { packd_export_3 } from 'https://srv.divriots.com/packd/lit,lit-html@next-major,lit/decorators.js,lit/directives/class-map.js';const { classMap } = packd_export_3;;
 import './eagerly-slider.css.js';
@@ -87,10 +87,10 @@ let EagerlySlider = class EagerlySlider extends LitElement {
 
 				<div class="actions">
 					<button class="btn" data-action="slideBack" @click=${() => this.changeSlide(false)} aria-label="Prev Slide">
-						${svg `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.42 7.4l-4.6 4.6 4.6 4.6-1.4 1.4-6-6 6-6z"/></svg>`}
+						<svg version="1.1" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.42 7.4l-4.6 4.6 4.6 4.6-1.4 1.4-6-6 6-6z"/></svg>
 					</button>
 					<button class="btn" data-action="slideNext" @click=${() => this.changeSlide(true)} aria-label="Next Slide">
-						${svg `<svg viewBox="0 0 24 24"><path fill="currentColor" d="M9.98 6l6 6-6 6-1.4-1.4 4.6-4.6-4.6-4.6z"/></svg>`}
+						<svg version="1.1" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.98 6l6 6-6 6-1.4-1.4 4.6-4.6-4.6-4.6z"/></svg>
 					</button>
 				</div>
 
@@ -153,6 +153,11 @@ EagerlySlider.styles = css `
       border: none;
       border-radius: var(--eagerly-slider-radius, 50%);
       background-color:  var(--eagerly-slider-clr-secundary, #000);
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
     }
 
     .show-btn {
@@ -220,6 +225,26 @@ EagerlySlider.styles = css `
 
     ::slotted(.slide-out-right) {
       transform: translateX(100%);
+    }
+
+    @keyframes animateInLeft {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes animateInRight {
+      0% {
+        transform: translateX(100%);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
     }
   `;
 __decorate([
