@@ -1,4 +1,4 @@
-import { LitElement, html, css, svg } from 'lit'
+import { LitElement, html, css } from 'lit'
 import { customElement, property } from 'lit/decorators.js'
 import { classMap } from 'lit/directives/class-map.js'
 
@@ -129,6 +129,11 @@ export class EagerlySlider extends LitElement {
       background-color:  var(--eagerly-slider-clr-secundary, #000);
     }
 
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
     .show-btn {
       display: flex;
     }
@@ -195,6 +200,26 @@ export class EagerlySlider extends LitElement {
     ::slotted(.slide-out-right) {
       transform: translateX(100%);
     }
+
+    @keyframes animateInLeft {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes animateInRight {
+      0% {
+        transform: translateX(100%);
+      }
+
+      100% {
+        transform: translateX(0);
+      }
+    }
   `
 
   render() {
@@ -214,10 +239,10 @@ export class EagerlySlider extends LitElement {
 
 				<div class="actions">
 					<button class="btn" data-action="slideBack" @click=${() => this.changeSlide(false)} aria-label="Prev Slide">
-						${svg`<svg viewBox="0 0 24 24"><path fill="currentColor" d="M15.42 7.4l-4.6 4.6 4.6 4.6-1.4 1.4-6-6 6-6z"/></svg>`}
+						<svg version="1.1" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.42 7.4l-4.6 4.6 4.6 4.6-1.4 1.4-6-6 6-6z"/></svg>
 					</button>
 					<button class="btn" data-action="slideNext" @click=${() => this.changeSlide(true)} aria-label="Next Slide">
-						${svg`<svg viewBox="0 0 24 24"><path fill="currentColor" d="M9.98 6l6 6-6 6-1.4-1.4 4.6-4.6-4.6-4.6z"/></svg>`}
+						<svg version="1.1" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.98 6l6 6-6 6-1.4-1.4 4.6-4.6-4.6-4.6z"/></svg>
 					</button>
 				</div>
 
